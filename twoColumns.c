@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 #define MAXC 100000   /* if you need a constant, #define one (or more) */
 
@@ -42,14 +44,19 @@ size_t coefficients (FILE *fp, int *a, int *b)
 }
 
 int main (int argc, char **argv) {
+
+    //arreglos para almacenar valores leidos desde archivos
     int val[MAXC] = {};
     int  wt[MAXC] = {};
+    int capacidad_maxima=0;
 
-    int a[MAXC] = {0}, b[MAXC] = {0};    /* arrays of MAXC doubles */
-    size_t n = 0;                           /* count of doubles returned */
+    int a[MAXC] = {0}, b[MAXC] = {0};           /* arrays of MAXC doubles */
+    size_t n = 0;                               /* count of doubles returned */
     /* use filename provided as 1st argument (stdin by default) */
     FILE *fp = argc > 1 ? fopen (argv[1], "r") : stdin;
-
+    
+    capacidad_maxima = atoi(argv[2]);
+    
     if (!fp) {  /* validate file open for reading */
         perror ("file open failed");
         return 1;
@@ -68,10 +75,11 @@ int main (int argc, char **argv) {
           /* asignacion */
           val[i] = a[i];
           wt[i]  = b[i];  
-          /* se muestran columnas */
+          /* se muestran columnas leidas desde archivo*/
           printf ("a[%zu] : %d   b[%zu] : %d\n", i, a[i], i, b[i]);
     }  
-    printf("\n resultado = %d \n", knapsack(500, wt , val, n));
+    printf("capacidad maxima contenedor: %d",capacidad_maxima);
+    printf("\n resultado = %d \n", knapsack(capacidad_maxima, wt , val, n));
 
 
     return 0;
