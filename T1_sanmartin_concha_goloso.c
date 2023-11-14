@@ -3,17 +3,17 @@
 #include <string.h>
 #include <time.h>
 
-#define MAXC 100000   /* if you need a constant, #define one (or more) */
+#define MAXC 100000   /* constante para capacidad maxima de arreglo */
 
 int max(int a, int b) { return (a > b)? a : b; }
-// Returns the maximum value that can be put in a contenedor of capacity W
+// retorna el maximo de los valores pasados por parametro.
 
 int knapsack(int W, int wt[], int val[], int n)
 {
    int i, w;
    int K[n+1][W+1];
 
-   // Build table K[][] in bottom up manner
+   // Se construye una tabla K[][] de la forma "desde abajo hacia arriba"
    for (i = 0; i <= n; i++)
    {
        for (w = 0; w <= W; w++)
@@ -30,12 +30,12 @@ int knapsack(int W, int wt[], int val[], int n)
    return K[n][W];
 }
 
-size_t coefficients (FILE *fp, int *a, int *b)
+size_t obtenerValores (FILE *fp, int *a, int *b)
 {
     char buf[MAXC];         /* buffering para leer cada linea */ 
     size_t ncoeff = 0;      /* cantidad de numeros pares leidos */
 
-    while (ncoeff < MAXC && fgets (buf, MAXC, fp))  /* read each line */
+    while (ncoeff < MAXC && fgets (buf, MAXC, fp))  /* se lee cada linea */
         /* si hay dos columnas de valores que leer */
         if (sscanf (buf, "%d %d", &a[ncoeff], &b[ncoeff]) == 2)
             ncoeff++;       /* se incrementa contador */
@@ -65,7 +65,7 @@ int main (int argc, char **argv) {
         return 1;
     }
 
-    if (!(n = coefficients (fp, a, b))) {   /* validate pares de valores leidos */
+    if (!(n = obtenerValores (fp, a, b))) {   /* validate pares de valores leidos */
         fputs ("error: sin valores que leer desde archivo.\n", stderr);
         return 1;
     }
